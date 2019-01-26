@@ -11,7 +11,9 @@ class Mesh
 public:
 	Mesh();
 
-	void init(glm::vec4 *vertices, glm::vec4 *colors, unsigned int numOfVertices, GLuint positionAttribLocation, GLuint colorAttribLocation);
+	Mesh(glm::vec4 *vertices, glm::vec4 *colors, GLuint numOfVertices);
+
+	void init(GLuint positionAttribLocation, GLuint colorAttribLocation);
 
 	void display();
 
@@ -22,5 +24,6 @@ public:
 private:
 	GLuint VAO, VBO;
 	GLuint numOfVertices;
+	glm::vec4 *vertices, *colors;
 };
 

@@ -2,9 +2,31 @@
 
 Mesh::Mesh()
 {
+	numOfVertices = 3;
+
+	// default vertices
+	vertices = new glm::vec4[numOfVertices] {
+		glm::vec4(-0.5f, -0.5f, -1.5f, 1.0f),
+		glm::vec4(0.5f, -0.5f, -1.5f, 1.0f),
+		glm::vec4(0.5f, 0.5f, -1.5f, 1.0f)
+	};
+
+	// default colors
+	colors = new glm::vec4[numOfVertices] {
+		glm::vec4(1.0f, 0.0f, 0.0f, 1.0f),
+		glm::vec4(1.0f, 0.0f, 0.0f, 1.0f),
+		glm::vec4(1.0f, 1.0f, 0.0f, 1.0f)
+	};
 }
 
-void Mesh::init(glm::vec4 *vertices, glm::vec4 *colors, unsigned int numOfVertices, GLuint positionAttribLocation, GLuint colorAttribLocation)
+Mesh::Mesh(glm::vec4 * vertices, glm::vec4 * colors, GLuint numOfVertices)
+{
+	this->vertices = vertices;
+	this->colors = colors;
+	this->numOfVertices = numOfVertices;
+}
+
+void Mesh::init(GLuint positionAttribLocation, GLuint colorAttribLocation)
 {
 	this->numOfVertices = numOfVertices;
 

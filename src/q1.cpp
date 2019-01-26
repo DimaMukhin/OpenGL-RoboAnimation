@@ -3,6 +3,7 @@
 
 #include "common.h"
 #include "Mesh.h"
+#include "FloorMeshFactory.h"
 
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
@@ -13,7 +14,7 @@ const double FRAME_RATE_MS = 1000.0/60.0;
 
 GLuint projectionUniformLocation, modelUniformLocation, viewUniformLocation;
 
-Mesh *defaultMesh;
+Mesh *defaultMesh, *customMesh, *floorMesh;
 
 //----------------------------------------------------------------------------
 
@@ -37,18 +38,30 @@ void init()
 	glm::vec4 vertices[] = {
 		glm::vec4(-0.5f, -0.5f, -1.5f, 1.0f),
 		glm::vec4(0.5f, -0.5f, -1.5f, 1.0f),
-		glm::vec4(0.5f, 0.5f, -1.5f, 1.0f)
+		glm::vec4(0.5f, -0.5f, -2.5f, 1.0f),
+		glm::vec4(-0.5f, -0.5f, -1.5f, 1.0f),
+		glm::vec4(0.5f, -0.5f, -2.5f, 1.0f),
+		glm::vec4(-0.5f, -0.5f, -2.5f, 1.0f),
 	};
 
 	// colors
 	glm::vec4 colors[] = {
-		glm::vec4(1.0f, 0.0f, 0.0f, 1.0f),
-		glm::vec4(1.0f, 0.0f, 0.0f, 1.0f),
-		glm::vec4(1.0f, 1.0f, 0.0f, 1.0f)
+		glm::vec4(0.0f, 0.0f, 1.0f, 1.0f),
+		glm::vec4(0.0f, 0.0f, 1.0f, 1.0f),
+		glm::vec4(0.0f, 0.0f, 1.0f, 1.0f),
+		glm::vec4(0.0f, 0.0f, 1.0f, 1.0f),
+		glm::vec4(0.0f, 0.0f, 1.0f, 1.0f),
+		glm::vec4(0.0f, 0.0f, 1.0f, 1.0f)
 	};
 
 	defaultMesh = new Mesh();
-	defaultMesh->init(vertices, colors, 3, vPosition, vColor);
+	defaultMesh->init(vPosition, vColor);
+
+	customMesh = new Mesh(vertices, colors, 6);
+	customMesh->init(vPosition, vColor);
+
+	floorMesh = FloorMeshFactory().createFloorMesh();
+	floorMesh->init(vPosition, vColor);
 
     glEnable(GL_DEPTH_TEST);
     glClearColor(1.0, 1.0, 1.0, 1.0); 
@@ -60,7 +73,11 @@ void display( void )
 {
     glClear( GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT );
 
-	defaultMesh->display();
+	//defaultMesh->display();
+
+	//customMesh->display();
+
+	floorMesh->display();
 
     glutSwapBuffers();
 }
