@@ -4,6 +4,7 @@
 #include "common.h"
 #include "Mesh.h"
 #include "FloorMeshFactory.h"
+#include "Robot.h"
 
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
@@ -15,6 +16,8 @@ const double FRAME_RATE_MS = 1000.0/60.0;
 GLuint projectionUniformLocation, modelUniformLocation, viewUniformLocation;
 
 Mesh *customMesh, *floorMesh;
+
+Robot *robot;
 
 //----------------------------------------------------------------------------
 
@@ -946,6 +949,9 @@ void init()
 	floorMesh = FloorMeshFactory().createFloorMesh();
 	floorMesh->init(vPosition, vColor);
 
+	robot = new Robot(modelUniformLocation);
+	robot->init(vPosition, vColor);
+
     glEnable(GL_DEPTH_TEST);
     glClearColor(1.0, 1.0, 1.0, 1.0); 
 }
@@ -956,7 +962,9 @@ void display( void )
 {
     glClear( GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT );
 
-	customMesh->display();
+	//customMesh->display();
+
+	robot->display();
 
 	floorMesh->display();
 
@@ -1014,17 +1022,9 @@ void mouse( int button, int state, int x, int y )
 }
 
 //----------------------------------------------------------------------------
-GLfloat angle = 0.0f;
+
 void update( void )
 {
-	glm::mat4 model;
-	model = glm::translate(model, glm::vec3(0.0f, 0.0f, -10.0f));
-	model = glm::rotate(model, glm::radians(angle), glm::vec3(0.0f, 1.0f, 0.0f));
-	glUniformMatrix4fv(modelUniformLocation, 1, GL_FALSE, glm::value_ptr(model));
-
-	angle += 0.5f;
-	if (angle > 360.0f) angle = 0.0f;
-
 	glm::mat4 view;
 	view = glm::lookAt(glm::vec3(eyeX, 0.0f, eyeZ), glm::vec3(centerX, centerY, -1.0f), glm::vec3(0.0f, 1.0f, 0.0f));
 	glUniformMatrix4fv(viewUniformLocation, 1, GL_FALSE, glm::value_ptr(view));
