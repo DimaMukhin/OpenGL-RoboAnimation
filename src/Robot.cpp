@@ -161,6 +161,24 @@ Mesh* Robot::createHeadMesh()
 Robot::Robot(GLuint modelUniformLocation)
 {
 	this->modelUniformLocation = modelUniformLocation;
+
+	// robot starting position in world coord
+	robotX = -10.0f;
+	robotY = 3.0f;
+	robotZ = -20.0f;
+
+	// robot arm angle of rotation
+	leftArmAngle = 0.0f;
+	leftArmRotationSpeed = -0.8f;
+	rightArmAngle = 0.0f;
+	rightArmRotationSpeed = 0.8f;
+
+	// robot leg angle of rotation
+	leftLegAngle = 0.0f;
+	leftLegRotationSpeed = 0.8f;
+	rightLegAngle = -45.0f;
+	rightLegRotationSpeed = -0.8f;
+
 	body = createBodyMesh();
 	leftLeg = createLimbMesh();
 	rightLeg = createLimbMesh();
@@ -187,15 +205,14 @@ void Robot::init(GLuint positionAttribLocation, GLuint colorAttribLocation)
 	head->init(positionAttribLocation, colorAttribLocation);
 }
 
-GLfloat angle = 0.0f;
 void Robot::display()
 {
 	glm::mat4 model;
 	std::stack<glm::mat4> s;
 	
 	// Robot transformations
-	model = glm::translate(model, glm::vec3(0.0f, 0.0f, -10.0f));
-	model = glm::rotate(model, glm::radians(angle), glm::vec3(0.0f, 1.0f, 0.0f));
+	model = glm::translate(model, glm::vec3(robotX, robotY, robotZ));
+	model = glm::rotate(model, glm::radians(90.0f), glm::vec3(0.0f, 1.0f, 0.0f));
 	glUniformMatrix4fv(modelUniformLocation, 1, GL_FALSE, glm::value_ptr(model));
 
 	// body
@@ -204,6 +221,17 @@ void Robot::display()
 	// left leg
 	s.push(model);
 	model = glm::translate(model, glm::vec3(-0.5f, -1.0f, 0.0f));
+	model = glm::rotate(model, glm::radians(leftLegAngle), glm::vec3(1.0f, 0.0f, 0.0f));
+
+		// left foot
+		s.push(model);
+		model = glm::translate(model, glm::vec3(0.0f, -1.5f, 0.0f));
+		model = glm::rotate(model, glm::radians(-90.0f), glm::vec3(1.0f, 0.0f, 0.0f));
+		glUniformMatrix4fv(modelUniformLocation, 1, GL_FALSE, glm::value_ptr(model));
+		leftFoot->display();
+		model = s.top();
+		s.pop();
+
 	glUniformMatrix4fv(modelUniformLocation, 1, GL_FALSE, glm::value_ptr(model));
 	leftLeg->display();
 	model = s.top();
@@ -212,32 +240,36 @@ void Robot::display()
 	// right leg
 	s.push(model);
 	model = glm::translate(model, glm::vec3(0.5f, -1.0f, 0.0f));
+	model = glm::rotate(model, glm::radians(rightLegAngle), glm::vec3(1.0f, 0.0f, 0.0f));
+
+		// right foot
+		s.push(model);
+		model = glm::translate(model, glm::vec3(0.0f, -1.5f, 0.0f));
+		model = glm::rotate(model, glm::radians(-90.0f), glm::vec3(1.0f, 0.0f, 0.0f));
+		glUniformMatrix4fv(modelUniformLocation, 1, GL_FALSE, glm::value_ptr(model));
+		rightFoot->display();
+		model = s.top();
+		s.pop();
+
 	glUniformMatrix4fv(modelUniformLocation, 1, GL_FALSE, glm::value_ptr(model));
 	rightLeg->display();
-	model = s.top();
-	s.pop();
-
-	// left foot
-	s.push(model);
-	model = glm::translate(model, glm::vec3(-0.5f, -2.0f, 0.0f));
-	model = glm::rotate(model, glm::radians(-90.0f), glm::vec3(1.0f, 0.0f, 0.0f));
-	glUniformMatrix4fv(modelUniformLocation, 1, GL_FALSE, glm::value_ptr(model));
-	leftFoot->display();
-	model = s.top();
-	s.pop();
-
-	// right foot
-	s.push(model);
-	model = glm::translate(model, glm::vec3(0.5f, -2.0f, 0.0f));
-	model = glm::rotate(model, glm::radians(-90.0f), glm::vec3(1.0f, 0.0f, 0.0f));
-	glUniformMatrix4fv(modelUniformLocation, 1, GL_FALSE, glm::value_ptr(model));
-	rightFoot->display();
 	model = s.top();
 	s.pop();
 
 	// left arm
 	s.push(model);
 	model = glm::translate(model, glm::vec3(-1.5f, 2.0f, 0.0f));
+	model = glm::rotate(model, glm::radians(leftArmAngle), glm::vec3(1.0f, 0.0f, 0.0f));
+
+		// left hand
+		s.push(model);
+		model = glm::translate(model, glm::vec3(0.0f, -1.5f, 0.0f));
+		model = glm::rotate(model, glm::radians(-90.0f), glm::vec3(1.0f, 0.0f, 0.0f));
+		glUniformMatrix4fv(modelUniformLocation, 1, GL_FALSE, glm::value_ptr(model));
+		leftHand->display();
+		model = s.top();
+		s.pop();
+
 	glUniformMatrix4fv(modelUniformLocation, 1, GL_FALSE, glm::value_ptr(model));
 	leftArm->display();
 	model = s.top();
@@ -246,24 +278,17 @@ void Robot::display()
 	// right arm
 	s.push(model);
 	model = glm::translate(model, glm::vec3(1.5f, 2.0f, 0.0f));
-	glUniformMatrix4fv(modelUniformLocation, 1, GL_FALSE, glm::value_ptr(model));
-	rightArm->display();
-	model = s.top();
-	s.pop();
+	model = glm::rotate(model, glm::radians(rightArmAngle), glm::vec3(1.0f, 0.0f, 0.0f));
 
-	// left hand
-	s.push(model);
-	model = glm::translate(model, glm::vec3(-1.5f, 0.5f, 0.0f));
-	model = glm::rotate(model, glm::radians(-90.0f), glm::vec3(1.0f, 0.0f, 0.0f));
-	glUniformMatrix4fv(modelUniformLocation, 1, GL_FALSE, glm::value_ptr(model));
-	leftArm->display();
-	model = s.top();
-	s.pop();
+		// right hand
+		s.push(model);
+		model = glm::translate(model, glm::vec3(0.0f, -1.5f, 0.0f));
+		model = glm::rotate(model, glm::radians(-90.0f), glm::vec3(1.0f, 0.0f, 0.0f));
+		glUniformMatrix4fv(modelUniformLocation, 1, GL_FALSE, glm::value_ptr(model));
+		rightHand->display();
+		model = s.top();
+		s.pop();
 
-	// right hand
-	s.push(model);
-	model = glm::translate(model, glm::vec3(1.5f, 0.5f, 0.0f));
-	model = glm::rotate(model, glm::radians(-90.0f), glm::vec3(1.0f, 0.0f, 0.0f));
 	glUniformMatrix4fv(modelUniformLocation, 1, GL_FALSE, glm::value_ptr(model));
 	rightArm->display();
 	model = s.top();
@@ -280,12 +305,62 @@ void Robot::display()
 	// reseting model uniform to not affect any other models/mesh
 	glUniformMatrix4fv(modelUniformLocation, 1, GL_FALSE, glm::value_ptr(glm::mat4()));
 
-	angle += 0.5f;
-	if (angle > 360.0f) angle = 0.0f;
+	update();
 }
 
 Robot::~Robot()
 {
 	delete body;
 	delete leftLeg;
+}
+
+/****************** private block ***********************/
+
+void Robot::update()
+{
+	robotX += 0.1f;
+	if (robotX > 10.0f)
+	{
+		robotX = -10.0f;
+	}
+
+	leftArmAngle += leftArmRotationSpeed;
+	if (leftArmAngle > 45.0f)
+	{
+		leftArmRotationSpeed *= -1;
+	}
+	else if (leftArmAngle < -45.0f)
+	{
+		leftArmRotationSpeed *= -1;
+	}
+
+	rightArmAngle += rightArmRotationSpeed;
+	if (rightArmAngle > 45.0f)
+	{
+		rightArmRotationSpeed *= -1;
+	}
+	else if (rightArmAngle < -45.0f)
+	{
+		rightArmRotationSpeed *= -1;
+	}
+
+	leftLegAngle += leftLegRotationSpeed;
+	if (leftLegAngle > 10.0f)
+	{
+		leftLegRotationSpeed *= -1;
+	}
+	else if (leftLegAngle < -45.0f)
+	{
+		leftLegRotationSpeed *= -1;
+	}
+
+	rightLegAngle += rightLegRotationSpeed;
+	if (rightLegAngle > 10.0f)
+	{
+		rightLegRotationSpeed *= -1;
+	}
+	else if (rightLegAngle < -45.0f)
+	{
+		rightLegRotationSpeed *= -1;
+	}
 }

@@ -35,6 +35,10 @@ private:
 
 	GLuint modelUniformLocation;
 
+	GLfloat robotX, robotY, robotZ;
+	GLfloat leftArmAngle, leftArmRotationSpeed, rightArmAngle, rightArmRotationSpeed;
+	GLfloat leftLegAngle, leftLegRotationSpeed, rightLegAngle, rightLegRotationSpeed;
+
 	Mesh *body;
 	Mesh *leftLeg;
 	Mesh *rightLeg;
@@ -45,4 +49,6 @@ private:
 	Mesh *leftHand;
 	Mesh *rightHand;
 	Mesh *head;
+
+	void update();
 };

@@ -21,12 +21,12 @@ Mesh* FloorMeshFactory::createFloorMesh()
 	{
 		for (GLfloat z = 50; z > -55; z -= 5.0f)
 		{
-			 vertices[i++] = glm::vec4(x, -2.5f, z, 1.0f);
-			 vertices[i++] = glm::vec4(x + 5, -2.5f, z, 1.0f);
-			 vertices[i++] = glm::vec4(x + 5, -2.5f, z - 5, 1.0f);
-			 vertices[i++] = glm::vec4(x, -2.5f, z, 1.0f);
-			 vertices[i++] = glm::vec4(x + 5, -2.5f, z - 5, 1.0f);
-			 vertices[i++] = glm::vec4(x, -2.5f, z - 5, 1.0f);
+			 vertices[i++] = glm::vec4(x, 0.0f, z, 1.0f);
+			 vertices[i++] = glm::vec4(x + 5, 0.0f, z, 1.0f);
+			 vertices[i++] = glm::vec4(x + 5, 0.0f, z - 5, 1.0f);
+			 vertices[i++] = glm::vec4(x, 0.0f, z, 1.0f);
+			 vertices[i++] = glm::vec4(x + 5, 0.0f, z - 5, 1.0f);
+			 vertices[i++] = glm::vec4(x, 0.0f, z - 5, 1.0f);
 
 			colors[j++] = currColor;
 			colors[j++] = currColor;
