@@ -53,8 +53,6 @@ void display( void )
 {
     glClear( GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT );
 
-	//customMesh->display();
-
 	robot->display();
 
 	floorMesh->display();
@@ -63,7 +61,8 @@ void display( void )
 }
 
 //----------------------------------------------------------------------------
-
+int currCameraPosition = 0;
+int cameraPositions = 4;
 void keyboard( unsigned char key, int x, int y )
 {
     switch( key ) 
@@ -71,6 +70,11 @@ void keyboard( unsigned char key, int x, int y )
 		case 033: // Escape Key
 		case 'q': case 'Q':
 			exit( EXIT_SUCCESS );
+			break;
+		case ' ':
+			currCameraPosition++;
+			if (currCameraPosition >= cameraPositions)
+				currCameraPosition = 0;
 			break;
     }
 }
@@ -92,7 +96,14 @@ void mouse( int button, int state, int x, int y )
 void update( void )
 {
 	glm::mat4 view;
-	view = glm::lookAt(glm::vec3(0.0f, 2.5f, 0.0f), glm::vec3(0.0f, 2.5f, -1.0f), glm::vec3(0.0f, 1.0f, 0.0f));
+	if (currCameraPosition == 0)
+		view = glm::lookAt(glm::vec3(0.0f, 2.5f, 0.0f), glm::vec3(0.0f, 2.5f, -1.0f), glm::vec3(0.0f, 1.0f, 0.0f));
+	else if (currCameraPosition == 1)
+		view = glm::lookAt(glm::vec3(-20.0f, 30.0f, -15.0f), glm::vec3(0.0f, 0.0f, -20.0f), glm::vec3(0.0f, 1.0f, 0.0f));
+	else if (currCameraPosition == 2)
+		view = glm::lookAt(glm::vec3(-20.0f, 30.0f, -30.0f), glm::vec3(0.0f, 0.0f, -20.0f), glm::vec3(0.0f, 1.0f, 0.0f));
+	else if (currCameraPosition == 3)
+		view = glm::lookAt(glm::vec3(20.0f, 30.0f, -30.0f), glm::vec3(0.0f, 0.0f, -20.0f), glm::vec3(0.0f, 1.0f, 0.0f));
 	glUniformMatrix4fv(viewUniformLocation, 1, GL_FALSE, glm::value_ptr(view));
 }
 

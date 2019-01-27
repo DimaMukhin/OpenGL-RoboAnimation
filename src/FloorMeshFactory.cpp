@@ -9,9 +9,9 @@ Mesh* FloorMeshFactory::createFloorMesh()
 	glm::vec4 *vertices = new glm::vec4[21*21*6];
 	glm::vec4 *colors = new glm::vec4[21*21*6];
 	
-	glm::vec4 red(1.0f, 0.0f, 0.0f, 1.0f);
-	glm::vec4 blue(0.0f, 0.0f, 1.0f, 1.0f);
-	glm::vec4 currColor = blue;
+	glm::vec4 black(0.0f, 0.0f, 0.0f, 1.0f);
+	glm::vec4 gray(0.5f, 0.5f, 0.5f, 1.0f);
+	glm::vec4 currColor = gray;
 
 	int i = 0;
 	int j = 0;
@@ -39,11 +39,11 @@ Mesh* FloorMeshFactory::createFloorMesh()
 
 			if (count % 2 == 0)
 			{
-				currColor = blue;
+				currColor = gray;
 			}
 			else
 			{
-				currColor = red;
+				currColor = black;
 			}
 		}
 	}
