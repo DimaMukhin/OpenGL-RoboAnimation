@@ -87,7 +87,7 @@ Mesh* Robot::createLimbMesh()
 
 	glm::vec4 *colors;
 	int colorIndices[] = {
-		0,0,0,0,0,0,
+		7,7,7,7,7,7,
 		1,1,1,1,1,1,
 		2,2,2,2,2,2,
 		3,3,3,3,3,3,
@@ -116,7 +116,7 @@ Mesh* Robot::createBodyMesh()
 
 	glm::vec4 *colors;
 	int colorIndices[] = {
-		0,0,0,0,0,0,
+		7,7,7,7,7,7,
 		1,1,1,1,1,1,
 		2,2,2,2,2,2,
 		3,3,3,3,3,3,
@@ -130,10 +130,10 @@ Mesh* Robot::createBodyMesh()
 
 Mesh* Robot::createHeadMesh()
 {
-	return createIcosphereMesh(glm::vec4(1.0f, 0.0f, 0.0f, 1.0f));
+	return createIcosphereMesh(glm::vec4(1.0f, 0.5f, 0.5f, 1.0f));
 }
 
-Mesh * Robot::createHandMesh()
+Mesh * Robot::createHandFootMesh()
 {
 	GLfloat numOfVertices = 18;
 
@@ -149,7 +149,7 @@ Mesh * Robot::createHandMesh()
 
 	glm::vec4 *colors;
 	int colorIndices[] = {
-		0,0,0,
+		7,7,7,
 		1,1,1,
 		2,2,2,
 		3,3,3,
@@ -183,15 +183,19 @@ Robot::Robot(GLuint modelUniformLocation)
 	rightLegAngle = -45.0f;
 	rightLegRotationSpeed = -0.8f;
 
+	// hand and foot rotation
+	handFootAngle = 0.0f;
+	handFootRotationSpeed = 5.0f;
+
 	body = createBodyMesh();
 	leftLeg = createLimbMesh();
 	rightLeg = createLimbMesh();
-	leftFoot = createLimbMesh();
-	rightFoot = createLimbMesh();
+	leftFoot = createHandFootMesh();
+	rightFoot = createHandFootMesh();
 	leftArm = createLimbMesh();
 	rightArm = createLimbMesh();
-	leftHand = createHandMesh();
-	rightHand = createHandMesh();
+	leftHand = createHandFootMesh();
+	rightHand = createHandFootMesh();
 	head = createHeadMesh();
 }
 
@@ -229,8 +233,9 @@ void Robot::display()
 
 		// left foot
 		s.push(model);
-		model = glm::translate(model, glm::vec3(0.0f, -1.5f, 0.0f));
+		model = glm::translate(model, glm::vec3(0.0f, -1.5f, 0.5f));
 		model = glm::rotate(model, glm::radians(-90.0f), glm::vec3(1.0f, 0.0f, 0.0f));
+		model = glm::rotate(model, glm::radians(handFootAngle), glm::vec3(0.0f, 1.0f, 0.0f));
 		glUniformMatrix4fv(modelUniformLocation, 1, GL_FALSE, glm::value_ptr(model));
 		leftFoot->display();
 		model = s.top();
@@ -248,8 +253,9 @@ void Robot::display()
 
 		// right foot
 		s.push(model);
-		model = glm::translate(model, glm::vec3(0.0f, -1.5f, 0.0f));
+		model = glm::translate(model, glm::vec3(0.0f, -1.5f, 0.5f));
 		model = glm::rotate(model, glm::radians(-90.0f), glm::vec3(1.0f, 0.0f, 0.0f));
+		model = glm::rotate(model, glm::radians(handFootAngle), glm::vec3(0.0f, 1.0f, 0.0f));
 		glUniformMatrix4fv(modelUniformLocation, 1, GL_FALSE, glm::value_ptr(model));
 		rightFoot->display();
 		model = s.top();
@@ -267,8 +273,9 @@ void Robot::display()
 
 		// left hand
 		s.push(model);
-		model = glm::translate(model, glm::vec3(0.0f, -1.5f, 0.0f));
+		model = glm::translate(model, glm::vec3(0.0f, -1.5f, 0.5f));
 		model = glm::rotate(model, glm::radians(-90.0f), glm::vec3(1.0f, 0.0f, 0.0f));
+		model = glm::rotate(model, glm::radians(handFootAngle), glm::vec3(0.0f, 1.0f, 0.0f));
 		glUniformMatrix4fv(modelUniformLocation, 1, GL_FALSE, glm::value_ptr(model));
 		leftHand->display();
 		model = s.top();
@@ -286,8 +293,9 @@ void Robot::display()
 
 		// right hand
 		s.push(model);
-		model = glm::translate(model, glm::vec3(0.0f, -1.5f, 0.0f));
+		model = glm::translate(model, glm::vec3(0.0f, -1.5f, 0.5f));
 		model = glm::rotate(model, glm::radians(-90.0f), glm::vec3(1.0f, 0.0f, 0.0f));
+		model = glm::rotate(model, glm::radians(handFootAngle), glm::vec3(0.0f, 1.0f, 0.0f));
 		glUniformMatrix4fv(modelUniformLocation, 1, GL_FALSE, glm::value_ptr(model));
 		rightHand->display();
 		model = s.top();
@@ -366,5 +374,11 @@ void Robot::update()
 	else if (rightLegAngle < -45.0f)
 	{
 		rightLegRotationSpeed *= -1;
+	}
+
+	handFootAngle += handFootRotationSpeed;
+	if (handFootAngle >= 360.0f)
+	{
+		handFootAngle = 0.0f;
 	}
 }

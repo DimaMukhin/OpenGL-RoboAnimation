@@ -22,7 +22,7 @@ public:
 
 	static Mesh* createHeadMesh();
 
-	static Mesh* createHandMesh();
+	static Mesh* createHandFootMesh();
 
 	Robot(GLuint modelUniformLocation);
 
@@ -41,6 +41,7 @@ private:
 	GLfloat robotX, robotY, robotZ;
 	GLfloat leftArmAngle, leftArmRotationSpeed, rightArmAngle, rightArmRotationSpeed;
 	GLfloat leftLegAngle, leftLegRotationSpeed, rightLegAngle, rightLegRotationSpeed;
+	GLfloat handFootAngle, handFootRotationSpeed;
 
 	Mesh *body;
 	Mesh *leftLeg;
