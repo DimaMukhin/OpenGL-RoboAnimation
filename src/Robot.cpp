@@ -13,7 +13,7 @@ glm::vec4* Robot::colors = new glm::vec4[8] {
 	glm::vec4(0.0, 1.0, 1.0, 1.0)   // cyan
 };
 
-glm::vec4* Robot::vertices = new glm::vec4[24] {
+glm::vec4* Robot::vertices = new glm::vec4[25] {
 	glm::vec4(-1.0f, -1.0f, 0.5f, 1.0f), // a body
 	glm::vec4(1.0f, -1.0f, 0.5f, 1.0f), // b body
 	glm::vec4(-1.0f, 2.0f, 0.5f, 1.0f), // c body
@@ -41,6 +41,7 @@ glm::vec4* Robot::vertices = new glm::vec4[24] {
 	glm::vec4(-0.5f, 0.5f, -0.5f, 1.0f), // c' head
 	glm::vec4(0.5f, 0.5f, -0.5f, 1.0f), // d' head
 
+	glm::vec4(0.0f, -2.0f, 0.0f, 1.0f), // pyramid point
 };
 
 glm::vec4 * Robot::generateColors(int * colors, int numOfColors)
@@ -129,26 +130,29 @@ Mesh* Robot::createBodyMesh()
 
 Mesh* Robot::createHeadMesh()
 {
-	GLfloat numOfVertices = 36;
+	return createIcosphereMesh(glm::vec4(1.0f, 0.0f, 0.0f, 1.0f));
+}
+
+Mesh * Robot::createHandMesh()
+{
+	GLfloat numOfVertices = 18;
 
 	glm::vec4 *vertices;
 	int vertexIndices[] = {
-		16,17,18,17,19,18,
-		20,22,21,21,22,23,
-		20,16,22,16,18,22,
-		17,21,19,21,23,19,
-		18,19,23,23,22,18,
-		16,20,21,21,17,16
+		10, 11, 24,
+		11, 15, 24,
+		15, 14, 24,
+		14, 10, 24,
+		10,11,15,15,14,10,
 	};
 	vertices = Robot::generateVertices(vertexIndices, numOfVertices);
 
 	glm::vec4 *colors;
 	int colorIndices[] = {
-		0,0,0,0,0,0,
-		1,1,1,1,1,1,
-		2,2,2,2,2,2,
-		3,3,3,3,3,3,
-		4,4,4,4,4,4,
+		0,0,0,
+		1,1,1,
+		2,2,2,
+		3,3,3,
 		5,5,5,5,5,5
 	};
 	colors = Robot::generateColors(colorIndices, numOfVertices);
@@ -186,8 +190,8 @@ Robot::Robot(GLuint modelUniformLocation)
 	rightFoot = createLimbMesh();
 	leftArm = createLimbMesh();
 	rightArm = createLimbMesh();
-	leftHand = createLimbMesh();
-	rightHand = createLimbMesh();
+	leftHand = createHandMesh();
+	rightHand = createHandMesh();
 	head = createHeadMesh();
 }
 

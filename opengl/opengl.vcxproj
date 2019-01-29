@@ -153,6 +153,7 @@
   <ItemGroup>
     <ClInclude Include="..\src\common.h" />
     <ClInclude Include="..\src\FloorMeshFactory.h" />
+    <ClInclude Include="..\src\icosphere.h" />
     <ClInclude Include="..\src\Mesh.h" />
     <ClInclude Include="..\src\Robot.h" />
     <ClInclude Include="stdafx.h" />
@@ -160,6 +161,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\src\FloorMeshFactory.cpp" />
+    <ClCompile Include="..\src\icosphere.cpp" />
     <ClCompile Include="..\src\main.cpp" />
     <ClCompile Include="..\src\Mesh.cpp" />
     <ClCompile Include="..\src\q1.cpp" />

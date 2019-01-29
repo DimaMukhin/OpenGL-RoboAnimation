@@ -7,6 +7,7 @@
 #include <stack>
 
 #include "Mesh.h"
+#include "icosphere.h"
 
 class Robot
 {
@@ -20,6 +21,8 @@ public:
 	static Mesh* createBodyMesh();
 
 	static Mesh* createHeadMesh();
+
+	static Mesh* createHandMesh();
 
 	Robot(GLuint modelUniformLocation);
 
