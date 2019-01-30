@@ -188,29 +188,17 @@ Robot::Robot(GLuint modelUniformLocation)
 	handFootRotationSpeed = 5.0f;
 
 	body = createBodyMesh();
-	leftLeg = createLimbMesh();
-	rightLeg = createLimbMesh();
-	leftFoot = createHandFootMesh();
-	rightFoot = createHandFootMesh();
-	leftArm = createLimbMesh();
-	rightArm = createLimbMesh();
-	leftHand = createHandFootMesh();
-	rightHand = createHandFootMesh();
+	limb = createLimbMesh();
 	head = createHeadMesh();
+	handFoot = createHandFootMesh();
 }
 
 void Robot::init(GLuint positionAttribLocation, GLuint colorAttribLocation)
 {
 	body->init(positionAttribLocation, colorAttribLocation);
-	leftLeg->init(positionAttribLocation, colorAttribLocation);
-	rightLeg->init(positionAttribLocation, colorAttribLocation);
-	leftFoot->init(positionAttribLocation, colorAttribLocation);
-	rightFoot->init(positionAttribLocation, colorAttribLocation);
-	leftArm->init(positionAttribLocation, colorAttribLocation);
-	rightArm->init(positionAttribLocation, colorAttribLocation);
-	leftHand->init(positionAttribLocation, colorAttribLocation);
-	rightHand->init(positionAttribLocation, colorAttribLocation);
+	limb->init(positionAttribLocation, colorAttribLocation);
 	head->init(positionAttribLocation, colorAttribLocation);
+	handFoot->init(positionAttribLocation, colorAttribLocation);
 }
 
 void Robot::display()
@@ -237,12 +225,12 @@ void Robot::display()
 		model = glm::rotate(model, glm::radians(-90.0f), glm::vec3(1.0f, 0.0f, 0.0f));
 		model = glm::rotate(model, glm::radians(handFootAngle), glm::vec3(0.0f, 1.0f, 0.0f));
 		glUniformMatrix4fv(modelUniformLocation, 1, GL_FALSE, glm::value_ptr(model));
-		leftFoot->display();
+		handFoot->display();
 		model = s.top();
 		s.pop();
 
 	glUniformMatrix4fv(modelUniformLocation, 1, GL_FALSE, glm::value_ptr(model));
-	leftLeg->display();
+	limb->display();
 	model = s.top();
 	s.pop();
 
@@ -257,12 +245,12 @@ void Robot::display()
 		model = glm::rotate(model, glm::radians(-90.0f), glm::vec3(1.0f, 0.0f, 0.0f));
 		model = glm::rotate(model, glm::radians(handFootAngle), glm::vec3(0.0f, 1.0f, 0.0f));
 		glUniformMatrix4fv(modelUniformLocation, 1, GL_FALSE, glm::value_ptr(model));
-		rightFoot->display();
+		handFoot->display();
 		model = s.top();
 		s.pop();
 
 	glUniformMatrix4fv(modelUniformLocation, 1, GL_FALSE, glm::value_ptr(model));
-	rightLeg->display();
+	limb->display();
 	model = s.top();
 	s.pop();
 
@@ -277,12 +265,12 @@ void Robot::display()
 		model = glm::rotate(model, glm::radians(-90.0f), glm::vec3(1.0f, 0.0f, 0.0f));
 		model = glm::rotate(model, glm::radians(handFootAngle), glm::vec3(0.0f, 1.0f, 0.0f));
 		glUniformMatrix4fv(modelUniformLocation, 1, GL_FALSE, glm::value_ptr(model));
-		leftHand->display();
+		handFoot->display();
 		model = s.top();
 		s.pop();
 
 	glUniformMatrix4fv(modelUniformLocation, 1, GL_FALSE, glm::value_ptr(model));
-	leftArm->display();
+	limb->display();
 	model = s.top();
 	s.pop();
 
@@ -297,12 +285,12 @@ void Robot::display()
 		model = glm::rotate(model, glm::radians(-90.0f), glm::vec3(1.0f, 0.0f, 0.0f));
 		model = glm::rotate(model, glm::radians(handFootAngle), glm::vec3(0.0f, 1.0f, 0.0f));
 		glUniformMatrix4fv(modelUniformLocation, 1, GL_FALSE, glm::value_ptr(model));
-		rightHand->display();
+		handFoot->display();
 		model = s.top();
 		s.pop();
 
 	glUniformMatrix4fv(modelUniformLocation, 1, GL_FALSE, glm::value_ptr(model));
-	rightArm->display();
+	limb->display();
 	model = s.top();
 	s.pop();
 

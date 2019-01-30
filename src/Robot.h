@@ -44,6 +44,10 @@ private:
 	GLfloat handFootAngle, handFootRotationSpeed;
 
 	Mesh *body;
+	Mesh *limb;
+	Mesh *head;
+	Mesh *handFoot;
+
 	Mesh *leftLeg;
 	Mesh *rightLeg;
 	Mesh *leftFoot;
@@ -52,7 +56,6 @@ private:
 	Mesh *rightArm;
 	Mesh *leftHand;
 	Mesh *rightHand;
-	Mesh *head;
 
 	void update();
 };
