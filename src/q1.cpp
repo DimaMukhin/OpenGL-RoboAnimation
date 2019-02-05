@@ -1,6 +1,14 @@
 // Based on: http://www.cs.unm.edu/~angel/BOOK/INTERACTIVE_COMPUTER_GRAPHICS/SIXTH_EDITION/CODE/CHAPTER03/WINDOWS_VERSIONS/example2.cpp
 // Modified to isolate the main program and use GLM
 
+/*
+	Assignment 1
+	Question 1
+	Instructor: John Braico
+	Programed By: Dima Mukhin
+	Student #: 7773184
+*/
+
 #include "common.h"
 #include "Mesh2.h"
 #include "Robot.h"
@@ -16,7 +24,6 @@ const double FRAME_RATE_MS = 1000.0/60.0;
 GLuint projectionUniformLocation, modelUniformLocation, viewUniformLocation;
 
 Floor *groundFloor;
-
 Robot *robot;
 
 //----------------------------------------------------------------------------
@@ -42,9 +49,11 @@ void init()
 	glUniformMatrix4fv(modelUniformLocation, 1, GL_FALSE, glm::value_ptr(glm::mat4()));
 	glUniformMatrix4fv(viewUniformLocation, 1, GL_FALSE, glm::value_ptr(glm::mat4()));
 
+	// initializing our robot
 	robot = new Robot(modelUniformLocation);
 	robot->init(vPosition, vColor);
 
+	// initializing the ground floor
 	groundFloor = new Floor(modelUniformLocation);
 	groundFloor->init(vPosition, vColor);
 
@@ -63,9 +72,11 @@ void display( void )
 	groundFloor->display();
 
     glutSwapBuffers();
+	glFinish();
 }
 
 //----------------------------------------------------------------------------
+
 int currCameraPosition = 0;
 int cameraPositions = 4;
 void keyboard( unsigned char key, int x, int y )

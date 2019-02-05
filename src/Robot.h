@@ -12,10 +12,6 @@
 class Robot
 {
 public:
-	static glm::vec4* generateColors(int *colors, int numOfColors);
-
-	static glm::vec4* generateVertices(int *vertices, int numOfVertices);
-
 	static Mesh2* createLimbMesh();
 
 	static Mesh2* createBodyMesh();
@@ -33,9 +29,6 @@ public:
 	~Robot();
 
 private:
-	static glm::vec4 *vertices;
-	static glm::vec4 *colors;
-
 	static GLuint bodyNumOfVertices;
 	static glm::vec4 *bodyVertices;
 	static glm::vec4 *bodyColors;

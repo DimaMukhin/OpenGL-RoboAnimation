@@ -36,8 +36,6 @@ Mesh2::Mesh2(glm::vec4 *vertices, glm::vec4 *colors, GLuint numOfVertices, GLuin
 
 void Mesh2::init(GLuint positionAttribLocation, GLuint colorAttribLocation)
 {
-	this->numOfVertices = numOfVertices; // TODO: why did I put this here? do I need it?
-
 	// VAO
 	glGenVertexArrays(1, &VAO);
 	glBindVertexArray(VAO);
