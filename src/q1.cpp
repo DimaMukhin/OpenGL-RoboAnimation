@@ -4,7 +4,6 @@
 #include "common.h"
 #include "Mesh.h"
 #include "Mesh2.h"
-#include "FloorMeshFactory.h"
 #include "Robot.h"
 #include "Floor.h"
 
@@ -17,9 +16,7 @@ const double FRAME_RATE_MS = 1000.0/60.0;
 
 GLuint projectionUniformLocation, modelUniformLocation, viewUniformLocation;
 
-//Mesh *floorMesh;
 Floor *groundFloor;
-//Mesh2 *testMesh;
 
 Robot *robot;
 
@@ -46,17 +43,11 @@ void init()
 	glUniformMatrix4fv(modelUniformLocation, 1, GL_FALSE, glm::value_ptr(glm::mat4()));
 	glUniformMatrix4fv(viewUniformLocation, 1, GL_FALSE, glm::value_ptr(glm::mat4()));
 
-	/*floorMesh = FloorMeshFactory().createFloorMesh();
-	floorMesh->init(vPosition, vColor);*/
-
 	robot = new Robot(modelUniformLocation);
 	robot->init(vPosition, vColor);
 
 	groundFloor = new Floor(modelUniformLocation);
 	groundFloor->init(vPosition, vColor);
-
-	/*testMesh = new Mesh2();
-	testMesh->init(vPosition, vColor);*/
 
     glEnable(GL_DEPTH_TEST);
     glClearColor(1.0, 1.0, 1.0, 1.0); 
@@ -70,11 +61,7 @@ void display( void )
 
 	robot->display();
 
-	//floorMesh->display();
-
 	groundFloor->display();
-
-	//testMesh->display();
 
     glutSwapBuffers();
 }
