@@ -3,8 +3,10 @@
 
 #include "common.h"
 #include "Mesh.h"
+#include "Mesh2.h"
 #include "FloorMeshFactory.h"
 #include "Robot.h"
+#include "Floor.h"
 
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
@@ -15,7 +17,9 @@ const double FRAME_RATE_MS = 1000.0/60.0;
 
 GLuint projectionUniformLocation, modelUniformLocation, viewUniformLocation;
 
-Mesh *floorMesh;
+//Mesh *floorMesh;
+Floor *groundFloor;
+//Mesh2 *testMesh;
 
 Robot *robot;
 
@@ -37,11 +41,22 @@ void init()
 	modelUniformLocation = glGetUniformLocation(program, "model");
 	viewUniformLocation = glGetUniformLocation(program, "view");
 
-	floorMesh = FloorMeshFactory().createFloorMesh();
-	floorMesh->init(vPosition, vColor);
+	// putting some data in the uniforms just in case we forget to set them later
+	glUniformMatrix4fv(projectionUniformLocation, 1, GL_FALSE, glm::value_ptr(glm::mat4()));
+	glUniformMatrix4fv(modelUniformLocation, 1, GL_FALSE, glm::value_ptr(glm::mat4()));
+	glUniformMatrix4fv(viewUniformLocation, 1, GL_FALSE, glm::value_ptr(glm::mat4()));
+
+	/*floorMesh = FloorMeshFactory().createFloorMesh();
+	floorMesh->init(vPosition, vColor);*/
 
 	robot = new Robot(modelUniformLocation);
 	robot->init(vPosition, vColor);
+
+	groundFloor = new Floor(modelUniformLocation);
+	groundFloor->init(vPosition, vColor);
+
+	/*testMesh = new Mesh2();
+	testMesh->init(vPosition, vColor);*/
 
     glEnable(GL_DEPTH_TEST);
     glClearColor(1.0, 1.0, 1.0, 1.0); 
@@ -55,7 +70,11 @@ void display( void )
 
 	robot->display();
 
-	floorMesh->display();
+	//floorMesh->display();
+
+	groundFloor->display();
+
+	//testMesh->display();
 
     glutSwapBuffers();
 }
