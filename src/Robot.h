@@ -6,7 +6,7 @@
 #include <glm/gtc/type_ptr.hpp>
 #include <stack>
 
-#include "Mesh.h"
+#include "Mesh2.h"
 #include "icosphere.h"
 
 class Robot
@@ -16,13 +16,13 @@ public:
 
 	static glm::vec4* generateVertices(int *vertices, int numOfVertices);
 
-	static Mesh* createLimbMesh();
+	static Mesh2* createLimbMesh();
 
-	static Mesh* createBodyMesh();
+	static Mesh2* createBodyMesh();
 
-	static Mesh* createHeadMesh();
+	static Mesh2* createHeadMesh();
 
-	static Mesh* createHandFootMesh();
+	static Mesh2* createHandFootMesh();
 
 	Robot(GLuint modelUniformLocation);
 
@@ -36,6 +36,24 @@ private:
 	static glm::vec4 *vertices;
 	static glm::vec4 *colors;
 
+	static GLuint bodyNumOfVertices;
+	static glm::vec4 *bodyVertices;
+	static glm::vec4 *bodyColors;
+	static GLuint bodyNumOfIndices;
+	static GLuint *bodyIndices;
+
+	static GLuint limbNumOfVertices;
+	static glm::vec4 *limbVertices;
+	static glm::vec4 *limbColors;
+	static GLuint limbNumOfIndices;
+	static GLuint *limbIndices;
+
+	static GLuint handFootNumOfVertices;
+	static glm::vec4 *handFootVertices;
+	static glm::vec4 *handFootColors;
+	static GLuint handFootNumOfIndices;
+	static GLuint *handFootIndices;
+
 	GLuint modelUniformLocation;
 
 	GLfloat robotX, robotY, robotZ;
@@ -43,19 +61,10 @@ private:
 	GLfloat leftLegAngle, leftLegRotationSpeed, rightLegAngle, rightLegRotationSpeed;
 	GLfloat handFootAngle, handFootRotationSpeed;
 
-	Mesh *body;
-	Mesh *limb;
-	Mesh *head;
-	Mesh *handFoot;
-
-	Mesh *leftLeg;
-	Mesh *rightLeg;
-	Mesh *leftFoot;
-	Mesh *rightFoot;
-	Mesh *leftArm;
-	Mesh *rightArm;
-	Mesh *leftHand;
-	Mesh *rightHand;
+	Mesh2 *body;
+	Mesh2 *limb;
+	Mesh2 *head;
+	Mesh2 *handFoot;
 
 	void update();
 };

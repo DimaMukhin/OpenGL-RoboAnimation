@@ -68,19 +68,20 @@ void icosphere(int sub, std::vector<glm::vec4> &vertices, std::vector<GLuint> &i
    }
 }
 
-Mesh * createIcosphereMesh(glm::vec4 color)
+Mesh2* createIcosphereMesh(glm::vec4 color)
 {
-	std::vector<glm::vec4> vertices;
-	std::vector<GLuint> indices;
-	icosphere(2, vertices, indices);
+	std::vector<glm::vec4> *vertices = new std::vector<glm::vec4>();
+	std::vector<GLuint> *indices = new std::vector<GLuint>();
+	icosphere(2, *vertices, *indices);
 
-	std::vector<glm::vec4> *sVertices = new std::vector<glm::vec4>();
-	std::vector<glm::vec4> *sColors = new std::vector<glm::vec4>();;
+	/*std::vector<glm::vec4> *sVertices = new std::vector<glm::vec4>();
+	std::vector<glm::vec4> *sColors = new std::vector<glm::vec4>();;*/
 
-	for (int i = 0; i < indices.size(); i++) {
-		sVertices->push_back(vertices[indices[i]]);
-		sColors->push_back(color);
+	std::vector<glm::vec4> *colors = new std::vector<glm::vec4>();
+	for (int i = 0; i < vertices->size(); i++) {
+		//sVertices->push_back(vertices[indices[i]]);
+		colors->push_back(color);
 	}
 
-	return new Mesh(&sVertices->front(), &sColors->front(), sVertices->size());
+	return new Mesh2(&vertices->front(), &colors->front(), vertices->size(), &indices->front(), indices->size());
 }
