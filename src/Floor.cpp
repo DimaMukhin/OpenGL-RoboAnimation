@@ -37,12 +37,14 @@ Floor::Floor(GLuint modelUniformLocation)
 	grayTile = new Mesh2(vertices, grayColors, numOfVertices, indices, numOfIndices);
 }
 
+// initialize the floor
 void Floor::init(GLuint positionAttribLocation, GLuint colorAttribLocation)
 {
 	blackTile->init(positionAttribLocation, colorAttribLocation);
 	grayTile->init(positionAttribLocation, colorAttribLocation);
 }
 
+// fisplay the floor
 void Floor::display()
 {
 	int count = 0;
@@ -74,6 +76,7 @@ void Floor::display()
 	
 }
 
+// delete the floor
 Floor::~Floor()
 {
 }

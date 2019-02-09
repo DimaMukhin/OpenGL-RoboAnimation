@@ -1,5 +1,6 @@
 #include "Mesh2.h"
 
+// default mesh for testing purposes
 Mesh2::Mesh2()
 {
 	numOfVertices = 3;
@@ -34,6 +35,7 @@ Mesh2::Mesh2(glm::vec4 *vertices, glm::vec4 *colors, GLuint numOfVertices, GLuin
 	this->indices = indices;
 }
 
+// initialize the mesh (VAO IBO VBO)
 void Mesh2::init(GLuint positionAttribLocation, GLuint colorAttribLocation)
 {
 	// VAO
@@ -66,6 +68,7 @@ void Mesh2::init(GLuint positionAttribLocation, GLuint colorAttribLocation)
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0); // IMPORTANT: must unbind IBO adter unbinding VAO
 }
 
+// diaplay the mesh
 void Mesh2::display()
 {
 	// bind
@@ -80,10 +83,12 @@ void Mesh2::display()
 	glBindVertexArray(0);
 }
 
+// update the mesh
 void Mesh2::update()
 {
 }
 
+// delete the mesh
 Mesh2::~Mesh2()
 {
 }

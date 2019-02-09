@@ -92,21 +92,25 @@ GLuint* Robot::handFootIndices = new GLuint[Robot::handFootNumOfIndices]{
 	0,1,3,3,2,0,
 };
 
+// create limb mesh (its a 3d rectangle shape)
 Mesh2* Robot::createLimbMesh()
 {
 	return new Mesh2(Robot::limbVertices, Robot::limbColors, Robot::limbNumOfVertices, Robot::limbIndices, Robot::limbNumOfIndices);
 }
 
+// create body mesh (similar 3d rectangle shape but different)
 Mesh2* Robot::createBodyMesh()
 {
 	return new Mesh2(Robot::bodyVertices, Robot::bodyColors, Robot::bodyNumOfVertices, Robot::bodyIndices, Robot::bodyNumOfIndices);
 }
 
+// create head mesh (sphere)
 Mesh2* Robot::createHeadMesh()
 {
 	return createIcosphereMesh(glm::vec4(1.0f, 0.5f, 0.5f, 1.0f));
 }
 
+// create hand/foor mesh (pyramid)
 Mesh2* Robot::createHandFootMesh()
 {
 	return new Mesh2(Robot::handFootVertices, Robot::handFootColors, Robot::handFootNumOfVertices, Robot::handFootIndices, Robot::handFootNumOfIndices);
@@ -145,6 +149,7 @@ Robot::Robot(GLuint modelUniformLocation)
 	handFoot = createHandFootMesh();
 }
 
+// initialize the robot
 void Robot::init(GLuint positionAttribLocation, GLuint colorAttribLocation)
 {
 	body->init(positionAttribLocation, colorAttribLocation);
@@ -153,6 +158,7 @@ void Robot::init(GLuint positionAttribLocation, GLuint colorAttribLocation)
 	handFoot->init(positionAttribLocation, colorAttribLocation);
 }
 
+// display the robot
 void Robot::display()
 {
 	glm::mat4 model;
@@ -260,12 +266,14 @@ void Robot::display()
 	update();
 }
 
+// delete the robot
 Robot::~Robot()
 {
 }
 
 /****************** private block ***********************/
 
+// update the robot
 void Robot::update()
 {
 	robotX += 0.1f;
